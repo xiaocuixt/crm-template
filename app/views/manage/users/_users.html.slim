@@ -1,0 +1,28 @@
+table class="table table-sm table-bordered" data-toggle="table"
+  thead
+    tr
+      th.text-center scope="col" ID
+      th data-sortable="true" data-field="account" Account
+      th scope="col" Roles
+      th.text-center Dashboard Manager
+      th.text-center Department/Group
+      th data-sortable="true" data-field="created_at" Create Date
+      th scope="col" Operations
+  tbody
+    - users.each do |user|
+      tr
+        td.text-center = user.id
+        td = user.account
+        td = user.roles.pluck(:name).join(", ")
+        td.text-center = user.is_manager ? "<span class='badge badge-success'>YES</span>".html_safe : ''
+        td.text-center
+          = user.department&.name
+          |&nbsp;/&nbsp;
+          = user.user_group&.name
+        td= user.created_at.strftime('%Y-%m-%d')
+        td.text-center
+          = link_to edit_manage_user_path(user), data: { turbo_frame: 'modal' }, class: "btn btn-sm btn-primary" do
+            i class="fa fa-edit"
+          span.ml-2
+          = link_to edit_password_manage_user_path(user), data: { turbo_frame: 'modal' }, class: "btn btn-sm btn-info" do
+            i class="fa fa-key"

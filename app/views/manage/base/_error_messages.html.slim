@@ -1,0 +1,6 @@
+- if model.errors.present?
+  div.p-3.bg-danger.text-white
+    h5 There were problems with the following fields:
+    div style="margin-bottom:0px;"
+      - model.errors.full_messages.each.with_index(1) do |msg, index|
+        div = "#{index}. #{msg}"

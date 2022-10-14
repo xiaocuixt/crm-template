@@ -1,0 +1,10 @@
+nav
+  ol class="breadcrumb"
+    - breadcrumbs.each do |bread|
+      - if bread[:current_page]
+        li class="breadcrumb-item active" aria-current="page"
+          = bread[:label]
+      - else
+        li class="breadcrumb-item"
+          a href=bread[:link] data-turbo-action="advance"
+            = bread[:label]

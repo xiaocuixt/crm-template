@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Act Steel Erp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="<%= html_body_classes %>">
+    <%= turbo_frame_tag "act-erp-page" do %>
+      <%= render "header" %>
+      <div data-turbo-permanent>
+        <%= render "sidebar" %>
+      </div>
+      <%= render partial: "/manage/shared/flash_messages", flash: flash %>
+      <%= yield %>
+      <%= render "footer" %>
+    <% end %>
+    <%= turbo_frame_tag "modal" %>
+  </body>
+</html>

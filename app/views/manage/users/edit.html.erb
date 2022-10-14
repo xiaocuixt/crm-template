@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "modal" do %>
+  <%= render "form", model: @user, title: "Edit User", url: manage_user_path(@user) %>
+<% end %>

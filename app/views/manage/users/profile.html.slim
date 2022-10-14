@@ -1,0 +1,43 @@
+.page-main-content
+  = render "/manage/shared/breadcrumb", breadcrumbs: [ {label: "Home", link: "/manage/member_projects"},
+    {label: "User Profile", link: "", current_page: true},
+  ]
+  .card
+    .card-header.py-3
+      h6.m-0.font-weight-bold.text-primary User Info
+    .card-body
+      table.table.table-borderless
+        tr
+          th Account:
+          td = current_user.account
+        tr
+          th Roles:
+          td = current_user.roles.pluck(:name).join(", ")
+        tr
+          th Dashboard Manager
+          td = current_user.is_manager?
+        tr
+          th Last Update Date:
+          td = current_user.updated_at.strftime('%Y-%m-%d')
+  .card.mt-2
+    .card-header.py-3
+      h6.m-0.font-weight-bold.text-primary Reset Password
+    .card-body
+      .row.justify-content-center
+        .col-sm-6
+          = form_with model: current_user, url: reset_password_manage_users_path, method: :post, local: true do |f|
+            .modal-body
+              - if current_user.errors.present?
+                div.p-2.bg-danger.text-white
+                  p There were problems with the following fields:
+                  ul style="margin-bottom:0px;"
+                    - current_user.errors.full_messages.each do |msg|
+                      li = msg
+              .form-group
+                label.col-form-label for="message-text"  Password:
+                = f.password_field :password, class: "form-control"
+              .form-group
+                label.col-form-label for="message-text"  Password Confirmation:
+                = f.password_field :password_confirmation, class: "form-control"
+              .text-center
+                = f.submit 'Save', class: "btn btn-primary"

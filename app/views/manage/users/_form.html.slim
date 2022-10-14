@@ -1,0 +1,50 @@
+div data-controller="modal" class="modal fade2" tabindex="-1" role="dialog"
+  .modal-dialog.modal-lg role="document" 
+    .modal-content
+      .modal-header
+        h5#userModalLabel.modal-title = title
+        button.close aria-label="Close" data-dismiss="modal" type="button" 
+          span aria-hidden="true"  &times;
+      = form_with model: model, url: url, html: { data: { controller: "form", action: "turbo:submit-end->form#redirect" }} do |f|
+        .modal-body
+          = render "error_messages", model: model
+          .row
+            .col
+              .form-group
+                label.col-form-label for="recipient-name"  Mobile:
+                = f.text_field :mobile, class: "form-control"
+            .col
+              .form-group
+                label.col-form-label for="recipient-name"  Email:
+                = f.text_field :email, class: "form-control"
+          .row data-controller='department'
+            .col
+              .form-group
+                label.col-form-label for="department_id"  Department:
+                = f.select(:department_id, Department.all.map{|x| ["#{x.name}(#{x.alias_name})", x.id]}, {prompt: 'Select Department'}, class: "form-control", data: { url: , department_target: 'department', action: 'change->department#selectGroups'})
+            .col
+              .form-group
+                - user_groups = f.object.department.present? ? f.object.department.user_groups : []
+                label.col-form-label for="user_group_id"  User Group:
+                = f.select(:user_group_id, user_groups.map{|x| ["#{x.name}(#{x.alias_name})", x.id]}, {prompt: 'Select User Group'}, class: "form-control js-user-group-id")
+          .form-group
+            label.col-form-label for="user_group_id"  Client(optional):
+            = f.select(:client_id, Client.is_active.map{|x| [x.name, x.id]}, {prompt: 'Select Client'}, class: "form-control")
+          .form-group
+            = f.label :is_manager do
+              = f.check_box :is_manager
+              span.ml-2 Allow to manage dashboard
+          .form-group
+            label.col-form-label for="message-text" Roles:
+            .well
+              - Role.all.each do |role|
+                = check_box_tag "role_ids[]", role.id, f.object.user_roles.pluck(:role_id).include?(role.id)
+                |&nbsp;
+                = role.name
+                |&nbsp;&nbsp;
+          - unless f.object.persisted?
+            .form-group
+              label.col-form-label for="message-text"  Password:
+              = f.password_field :password, class: "form-control"
+        .modal-footer
+          button.btn.btn-primary type="submit"  Save

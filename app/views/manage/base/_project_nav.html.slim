@@ -1,0 +1,20 @@
+.mr-3 id="sidebar"
+  .list-group
+    a class="list-group-item list-group-item-action d-flex justify-content-between #{class_names(active: ((controller_name == 'member_projects' && action_name == 'show') || (controller_name == 'members')))}" data-turbo-action="advance" href=manage_member_project_path(member_project)
+      | 构件列表
+      i.fa.fa-chevron-right
+    a class="list-group-item list-group-item-action d-flex justify-content-between #{class_names(active: controller_name == 'dirs')}" data-turbo-action="advance" href=manage_member_project_dirs_path(member_project)
+      | 文件目录
+      i.fa.fa-chevron-right
+    a class="list-group-item list-group-item-action d-flex justify-content-between #{class_names(active: (controller_name == 'member_projects' && action_name == 'plan'))}" data-turbo-action="advance" href=plan_manage_member_project_path(member_project)
+      | 生产计划
+      i.fa.fa-chevron-right
+    a class="list-group-item list-group-item-action d-flex justify-content-between #{class_names(active: (controller_name == 'packing_lists' && action_name == 'index'))}" data-turbo-action="advance" href=manage_member_project_packing_lists_path(member_project)
+      | Packing List
+      i.fa.fa-chevron-right
+    a class="list-group-item list-group-item-action d-flex justify-content-between #{class_names(active: (controller_name == 'components' && action_name == 'index'))}" data-turbo-action="advance" href=manage_member_project_components_path(member_project)
+      | 模块(二次装配)
+      i.fa.fa-chevron-right
+    a class="list-group-item list-group-item-action d-flex justify-content-between #{class_names(active: (controller_name == 'packages' && action_name == 'index'))}" data-turbo-action="advance" href=manage_member_project_packages_path(member_project)
+      | 包裹列表
+      i.fa.fa-chevron-right
